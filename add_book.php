@@ -1,14 +1,6 @@
 <?php
-require('functions.php');
-session_start();
-$connection = mysqli_connect("localhost", "brij", "8543", "brij");
-$db = mysqli_select_db($connection, "lms");
-$book_name = "";
-$author = "";
-$issue_date = "";
-$student_name = "";
-$query = "select issued_books.book_name,issued_books.book_author,issued_books.issue_date,users.fullName from issued_books left join users on issued_books.student_id = users.id";
-
+	require('functions.php');
+	session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,6 +11,7 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+
 	<style type="text/css">
 		#side_bar {
 			background-color: whitesmoke;
@@ -30,7 +23,7 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<img class="mr-3" src="logo.png" alt="M" width="55" height="55">
@@ -38,17 +31,17 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 			</div>
 			<font style="color: white"><span><strong>Welcome: <?php echo $_SESSION['fullName']; ?></strong></span></font>
 			<font style="color: white"><span><strong>Email: <?php echo $_SESSION['email']; ?></strong></span></font>
-		<ul class="nav navbar-nav navbar-right">
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown">My Profile</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="view_profile.php">View Profile</a>
-					<a class="dropdown-item" href="edit_profile.php"> Edit Profile</a>
-					<a class="dropdown-item" href="change_password.php">Change Password</a>
-				</div>
-			</li>
-			<li class="nav-item"><a class="nav-link" href="../logout.php">Logout</a></li>
-		</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown">My Profile</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="view_profile.php">View Profile</a>
+						<a class="dropdown-item" href="edit_profile.php"> Edit Profile</a>
+						<a class="dropdown-item" href="change_password.php">Change Password</a>
+					</div>
+				</li>
+				<li class="nav-item"><a class="nav-link" href="../logout.php">Logout</a></li>
+			</ul>
 		</div>
 	</nav>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
@@ -86,43 +79,52 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 	</nav>
 
 	<span>
-	<marquee><em>This is Library Management System. It opens from 9:15 am to 8:30 pm (Mon-Fri), 9:15 am to 4:30 pm (Saturday &amp; Sunday)</em></marquee>
+		<marquee><em>This is Library Management System. It opens from 9:15 am to 8:30 pm (Mon-Fri), 9:15 am to 4:30 pm (Saturday &amp; Sunday)</em></marquee>
 	</span><br><br>
 	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
-			<form>
-				<table class="table-bordered" width="900px" style="text-align: center">
-					<tr>
-						<th>Name:</th>
-						<th>Author:</th>
-						<th>Issue Date:</th>
-						<th>Student Name:</th>
-					</tr>
-					<?php
-					$query_run = mysqli_query($connection, $query);
-					while ($row = mysqli_fetch_assoc($query_run)) {
-						$book_name = $row['book_name'];
-						$book_author = $row['book_author'];
-						$issue_date = $row['issue_date'];
-						$student_name = $_SESSION['fullName'];
-					?>
-						<tr>
-							<td><?php echo $book_name; ?></td>
-							<td><?php echo $book_author; ?></td>
-							<td><?php echo $issue_date; ?></td>
-							<td><?php echo $student_name; ?></td>
-						</tr>
-					<?php
-					}
-					?>
-				</table>
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form action="" method="post">
+				<div class="form-group">
+					<label>Book Name:</label>
+					<input type="text" name="book_name" class="form-control" required="">
+				</div>
+				<div class="form-group">
+					<label>Book Author:</label>
+					<input type="text" name="book_author" class="form-control" required="">
+				</div>
+
+				<div class="form-group">
+					<label>Category Name:</label>
+					<input type="text" name="book_cat" class="form-control" required="">
+				</div>
+
+				<div class="form-group">
+					<label>Book No:</label>
+					<input type="text" name="book_no" class="form-control" required="">
+				</div>
+
+				<div class="form-group">
+					<label>Book Price:</label>
+					<input type="text" name="book_price" class="form-control" required="">
+				</div>
+				<button class="btn btn-primary" name="add_book">Add Book</button>
+
 			</form>
 		</div>
-		
+		<div class="col-md-4"></div>
+	</div>
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
 </body>
 
 </html>
+
+<?php
+    if (isset($_POST['add_book'])) {
+	$connection = mysqli_connect("localhost", "brij", "8543", "brij");
+	$db = mysqli_select_db($connection, "lms");
+	$query = "insert into books values('$_POST[book_name]','$_POST[book_author]','$_POST[book_cat]',$_POST[book_no],$_POST[book_price])";
+	$query_run = mysqli_query($connection, $query);
+    }
+?>

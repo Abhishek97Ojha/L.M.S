@@ -1,24 +1,15 @@
 <?php
 require('functions.php');
 session_start();
-$connection = mysqli_connect("localhost", "brij", "8543", "brij");
-$db = mysqli_select_db($connection, "lms");
-$book_name = "";
-$author = "";
-$issue_date = "";
-$student_name = "";
-$query = "select issued_books.book_name,issued_books.book_author,issued_books.issue_date,users.fullName from issued_books left join users on issued_books.student_id = users.id";
-
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
 	<title>User Dashboard</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	<meta charset="utf-8" name="viewport" content="width=device-width,intial-scale=1">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+
 	<style type="text/css">
 		#side_bar {
 			background-color: whitesmoke;
@@ -30,7 +21,8 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<img class="mr-3" src="logo.png" alt="M" width="55" height="55">
@@ -86,43 +78,59 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 	</nav>
 
 	<span>
-	<marquee><em>This is Library Management System. It opens from 9:15 am to 8:30 pm (Mon-Fri), 9:15 am to 4:30 pm (Saturday &amp; Sunday)</em></marquee>
+		<marquee><em>This is Library Management System. It opens from 9:15 am to 8:30 pm (Mon-Fri), 9:15 am to 4:30 pm (Saturday &amp; Sunday)</em></marquee>
 	</span><br><br>
 	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
-			<form>
-				<table class="table-bordered" width="900px" style="text-align: center">
-					<tr>
-						<th>Name:</th>
-						<th>Author:</th>
-						<th>Issue Date:</th>
-						<th>Student Name:</th>
-					</tr>
-					<?php
-					$query_run = mysqli_query($connection, $query);
-					while ($row = mysqli_fetch_assoc($query_run)) {
-						$book_name = $row['book_name'];
-						$book_author = $row['book_author'];
-						$issue_date = $row['issue_date'];
-						$student_name = $_SESSION['fullName'];
-					?>
-						<tr>
-							<td><?php echo $book_name; ?></td>
-							<td><?php echo $book_author; ?></td>
-							<td><?php echo $issue_date; ?></td>
-							<td><?php echo $student_name; ?></td>
-						</tr>
-					<?php
-					}
-					?>
-				</table>
-			</form>
+		<div class="col-md-3">
+			<div class="card bg-light" style="width: 300px">
+				<div class="card-header">Registered Users:</div>
+				<div class="card-body">
+					<p class="card-text">No. of total users: <?php echo get_user_count(); ?></p>
+					<a href="regusers.php" class="btn btn-danger" target="_blank">View Registered Users</a>
+				</div>
+			</div>
 		</div>
-		
+		<div class="col-md-3">
+			<div class="card bg-light" style="width: 300px">
+				<div class="card-header">Registered Books:</div>
+				<div class="card-body">
+					<p class="card-text">No. of availbale books: <?php echo get_book_count(); ?></p>
+					<a href="regbooks.php" class="btn btn-primary" target="_blank">View Registered Books</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card bg-light" style="width: 300px">
+				<div class="card-header">Registered Category:</div>
+				<div class="card-body">
+					<p class="card-text">No. of book's category: <?php echo get_category_count(); ?></p>
+					<a href="regcat.php" class="btn btn-info" target="_blank">View Categories</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card bg-light" style="width: 300px">
+				<div class="card-header">Registered Authors:</div>
+				<div class="card-body">
+					<p class="card-text">No. of availbale authors: <?php echo get_author_count(); ?></p>
+					<a href="regauth.php" class="btn btn-primary" target="_blank">View Authors</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="card bg-light" style="width: 300px">
+				<div class="card-header">Issued Books:</div>
+				<div class="card-body">
+					<p class="card-text">No. Issued Books: <?php echo get_issued_book_count(); ?></p>
+					<a href="view_issued_book.php" class="btn btn-success" target="_blank">View Issued books</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

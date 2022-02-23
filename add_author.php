@@ -1,25 +1,18 @@
 <?php
 require('functions.php');
 session_start();
-$connection = mysqli_connect("localhost", "brij", "8543", "brij");
-$db = mysqli_select_db($connection, "lms");
-$book_name = "";
-$author = "";
-$issue_date = "";
-$student_name = "";
-$query = "select issued_books.book_name,issued_books.book_author,issued_books.issue_date,users.fullName from issued_books left join users on issued_books.student_id = users.id";
-
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<title>User Dashboard</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<style type="text/css">
+
+	<title>LMS</title>
+	<style>
 		#side_bar {
 			background-color: whitesmoke;
 			padding: 50px;
@@ -86,43 +79,26 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 	</nav>
 
 	<span>
-	<marquee><em>This is Library Management System. It opens from 9:15 am to 8:30 pm (Mon-Fri), 9:15 am to 4:30 pm (Saturday &amp; Sunday)</em></marquee>
+		<marquee><em>This is Library Management System. It opens from 9:15 am to 8:30 pm (Mon-Fri), 9:15 am to 4:30 pm (Saturday &amp; Sunday)</em></marquee>
 	</span><br><br>
 	<div class="row">
-		<div class="col-md-2"></div>
-		<div class="col-md-8">
-			<form>
-				<table class="table-bordered" width="900px" style="text-align: center">
-					<tr>
-						<th>Name:</th>
-						<th>Author:</th>
-						<th>Issue Date:</th>
-						<th>Student Name:</th>
-					</tr>
-					<?php
-					$query_run = mysqli_query($connection, $query);
-					while ($row = mysqli_fetch_assoc($query_run)) {
-						$book_name = $row['book_name'];
-						$book_author = $row['book_author'];
-						$issue_date = $row['issue_date'];
-						$student_name = $_SESSION['fullName'];
-					?>
-						<tr>
-							<td><?php echo $book_name; ?></td>
-							<td><?php echo $book_author; ?></td>
-							<td><?php echo $issue_date; ?></td>
-							<td><?php echo $student_name; ?></td>
-						</tr>
-					<?php
-					}
-					?>
-				</table>
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form action="" method="post">
+				<div class="form-group">
+					<label>Author Name:</label>
+					<input type="text" name="author_name" class="form-control" required="">
+				</div>
+				<button class="btn btn-primary" name="add_author">Add Author</button>
+
 			</form>
 		</div>
-		
+		<div class="col-md-4"></div>
+	</div>
+
+
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

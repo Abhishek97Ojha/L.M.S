@@ -3,12 +3,14 @@ require('functions.php');
 session_start();
 $connection = mysqli_connect("localhost", "brij", "8543", "brij");
 $db = mysqli_select_db($connection, "lms");
-$book_name = "";
-$author = "";
-$issue_date = "";
-$student_name = "";
-$query = "select issued_books.book_name,issued_books.book_author,issued_books.issue_date,users.fullName from issued_books left join users on issued_books.student_id = users.id";
+$id="";
+$fullName = "";
+$email = "";
+$mobile = "";
+$address = "";
+$password = "";
 
+$query = "select * from users";
 ?>
 <!DOCTYPE html>
 <html>
@@ -84,7 +86,6 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 			</ul>
 		</div>
 	</nav>
-
 	<span>
 	<marquee><em>This is Library Management System. It opens from 9:15 am to 8:30 pm (Mon-Fri), 9:15 am to 4:30 pm (Saturday &amp; Sunday)</em></marquee>
 	</span><br><br>
@@ -94,24 +95,27 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 			<form>
 				<table class="table-bordered" width="900px" style="text-align: center">
 					<tr>
+						<th>Id:</th>
 						<th>Name:</th>
-						<th>Author:</th>
-						<th>Issue Date:</th>
-						<th>Student Name:</th>
+						<th>Email:</th>
+						<th>Mobile:</th>
+						<th>Address:</th>
 					</tr>
 					<?php
 					$query_run = mysqli_query($connection, $query);
 					while ($row = mysqli_fetch_assoc($query_run)) {
-						$book_name = $row['book_name'];
-						$book_author = $row['book_author'];
-						$issue_date = $row['issue_date'];
-						$student_name = $_SESSION['fullName'];
+						$id = $row['id'];
+						$fullName = $row['fullName'];
+						$email = $row['email'];
+						$mobile = $row['mobile'];
+						$address = $row['address'];
 					?>
 						<tr>
-							<td><?php echo $book_name; ?></td>
-							<td><?php echo $book_author; ?></td>
-							<td><?php echo $issue_date; ?></td>
-							<td><?php echo $student_name; ?></td>
+							<td><?php echo $id; ?></td>
+							<td><?php echo $fullName; ?></td>
+							<td><?php echo $email; ?></td>
+							<td><?php echo $mobile; ?></td>
+							<td><?php echo $address; ?></td>
 						</tr>
 					<?php
 					}
@@ -119,10 +123,10 @@ $query = "select issued_books.book_name,issued_books.book_author,issued_books.is
 				</table>
 			</form>
 		</div>
-		
+		<div class="col-md-2"></div>
+	</div>
 	<script src="js/jquery.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

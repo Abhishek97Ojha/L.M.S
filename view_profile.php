@@ -5,21 +5,19 @@ $db = mysqli_select_db($connection, "lms");
 $fullName = "";
 $email = "";
 $mobile = "";
-$address = "";
-$query = "select * from users where email = '$_SESSION[email]'";
+$query = "select * from admins where email = '$_SESSION[email]'";
 $query_run = mysqli_query($connection, $query);
 while ($row = mysqli_fetch_assoc($query_run)) {
 	$fullName = $row['fullName'];
 	$email = $row['email'];
 	$mobile = $row['mobile'];
-	$address = $row['address'];
 }
 ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-	<title>User Dashboard</title>
+	<title>Admin Dashboard</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -35,8 +33,6 @@ while ($row = mysqli_fetch_assoc($query_run)) {
 </head>
 
 <body>
-
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -76,10 +72,6 @@ while ($row = mysqli_fetch_assoc($query_run)) {
 				<div class="form-group">
 					<label>Mobile:</label>
 					<input type="text" class="form-control" value="<?php echo $mobile; ?>" disabled>
-				</div>
-				<div class="form-group">
-					<label>Address:</label>
-					<textarea rows="3" cols="40" disabled="" class="form-control"><?php echo $address; ?></textarea>
 				</div>
 			</form>
 		</div>
